@@ -42,7 +42,7 @@ const deleteNoteLocally= (noteId: string) => {
         <SearchIcon className="absolute left-2 size-4"/>
         <Input
         className="bg-muted pl-8"
-        placeholder="search yout notes..."
+        placeholder="search your notes..."
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         />

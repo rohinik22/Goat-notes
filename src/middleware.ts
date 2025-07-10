@@ -62,7 +62,7 @@ export async function updateSession(request: NextRequest) {
       const { data: newestNote } = await supabase
         .from("notes")
         .select("id")
-        .eq("user_id", user.id)
+        .eq("authorId", user.id)
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
@@ -77,7 +77,7 @@ export async function updateSession(request: NextRequest) {
         // Create a new note directly
         const { data: newNote } = await supabase
           .from("notes")
-          .insert([{ user_id: user.id, content: "" }])
+          .insert([{ authorId: user.id, content: "" }])
           .select("id")
           .single();
 
