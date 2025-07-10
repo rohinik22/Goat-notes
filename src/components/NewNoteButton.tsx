@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {v4 as uuidv4} from "uuid";
 import { toast } from "sonner";
+import { debounceTimeout } from "@/lib/constants";
+import { createNoteAction } from "@/actions/notes";
 
 type Props = {
     user: User | null;
@@ -22,11 +24,20 @@ function NewNoteButton({user}: Props) {
             router.push("/login")
         } else{
            setLoading(true)
+           const savingToast = toast.success("Saving Current Note",{
+            description: "Saving your current note before creating a new one",
+           },);
+
+           await new Promise((resolve) =>
+        setTimeout(resolve, debounceTimeout + 500),
+        );
            
+        
            const uuid = uuidv4()
            await createNoteAction(uuid)
            router.push(`\?noteId=${uuid}`)
 
+           toast.dismiss(savingToast);
          toast.success("New Note Created", {
     description: "You have created a new note",
   },
